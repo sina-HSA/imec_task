@@ -23,6 +23,7 @@
 #include "generators/revsinglestream.h"
 #include "generators/singlestream.h"
 #include "generators/spmvgen.h"
+#include "generators/saxpygen.h"
 #include "generators/stencil3dbench.h"
 #include "generators/streambench.h"
 #include "generators/streambench_customcmd.h"
