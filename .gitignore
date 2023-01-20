@@ -1,5 +1,8 @@
 *.o
 *.lo
-*.Plo
 *.la
-
+*.so
+*.lai
+.dirstamp
+*.Po
+*.inc
