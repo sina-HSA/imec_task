@@ -36,7 +36,7 @@ public:
 		yVecStartAddr = params.find<uint64_t>("y_start_addr", nextStartAddr);
 
 		
-		scalarVal = params.find<double>("scalarVal", 2.0);
+		
         iterations = params.find<uint64_t>("iterations", 1);
 	}
 
@@ -50,10 +50,10 @@ public:
 
 			MemoryOpRequest* read_a  = new MemoryOpRequest(xVecStartAddr + i*elementWidth,elementWidth, READ);
             MemoryOpRequest* read_b = new MemoryOpRequest(yVecStartAddr + i*elementWidth,elementWidth, READ);
-            MemoryOpRequest* write_Res = new MemoryOpRequest(yVecStartAddr + i*elementWidth,elementWidth, WRITE);
+            MemoryOpRequest* write_b = new MemoryOpRequest(yVecStartAddr + i*elementWidth,elementWidth, WRITE);
 
-			write_Res->addDependency(read_a->getRequestID());
-			write_Res->addDependency(read_b->getRequestID());
+			write_b->addDependency(read_a->getRequestID());
+			write_b->addDependency(read_b->getRequestID());
 
 			out->verbose(CALL_INFO, 8, 0, "Issuing READ request for address %" PRIu64 "\n", (xVecStartAddr + i*elementWidth));
 			q->push_back(read_a);
@@ -62,7 +62,7 @@ public:
 			q->push_back(read_b);
 
 			out->verbose(CALL_INFO, 8, 0, "Issuing WRITE request for address %" PRIu64 "\n", (xVecStartAddr + i*elementWidth));
-			q->push_back(write_Res);
+			q->push_back(write_b);
 
 		}
         iterations--;
@@ -82,19 +82,12 @@ public:
         )
 
  	SST_ELI_DOCUMENT_PARAMS(
-		{ "matrix_nx",	"Sets the horizontal dimension of the matrix", "10" },
-    		{ "matrix_ny",      "Sets the vertical dimension of the matrix (the number of rows)", "10" },
+		{ "vecN",	"The number of elements ", "10" },
+    		{ "matrix_ny",      "Sets the vertical dimension of the matrix (the number of rows)", "10000" },
     		{ "elementWidth",  "Sets the width of one matrix element, typically 8 for a double", "8" },
-    		{ "lhs_start_addr", "Sets the start address of the LHS vector", "0" },
-    		{ "rhs_start_addr", "Sets the start address of the RHS vector", "80" },
-    		{ "local_row_start", "Sets the row at which this generator will start processing", "0" },
-    		{ "local_row_end",  "Sets the end at which rows will be processed by this generator", "10" },
-    		{ "ordinal_width",  "Sets the width of ordinals (indices) in the matrix, typically 4 or 8", "8"},
-    		{ "matrix_row_indices_start_addr", "Sets the row indices start address for the matrix", "0" },
-    		{ "matrix_col_indices_start_addr", "Sets the col indices start address for the matrix", "0" },
-    		{ "matrix_element_start_addr", "Sets the start address of the elements array", "0" },
-    		{ "iterations",     "Sets the number of repeats to perform" },
-    		{ "matrix_nnz_per_row", "Sets the number of non-zero elements per row", "9" }
+    		{ "xVecStartAddr", "Sets the start address of the A vector", "0" },
+    		{ "yVecStartAddr", "Sets the start address of the B vector", "10000" },
+    		{ "iterations",     "Sets the number of repeats to perform" }
         ) 
 
 private:
@@ -104,7 +97,7 @@ private:
 	uint64_t xVecStartAddr;
 	uint64_t yVecStartAddr;
 	uint64_t iterations;
-	double scalarVal;
+	
 };
 }
 }
