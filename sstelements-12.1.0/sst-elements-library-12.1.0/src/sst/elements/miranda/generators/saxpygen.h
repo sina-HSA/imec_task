@@ -1,6 +1,6 @@
 
-#ifndef _H_SST_MIRANDA_SPMV_BENCH_GEN
-#define _H_SST_MIRANDA_SPMV_BENCH_GEN
+#ifndef _H_SST_MIRANDA_SAXPY_BENCH_GEN
+#define _H_SST_MIRANDA_SAXPY_BENCH_GEN
 
 #include <sst/elements/miranda/mirandaGenerator.h>
 #include <sst/core/output.h>
@@ -73,7 +73,7 @@ public:
 	}
     void completed() {}
     SST_ELI_REGISTER_SUBCOMPONENT_DERIVED(
-                SAXPYenerator,
+                SAXPYGenerator,
                 "miranda",
                 "SAXPYGenerator",
                 SST_ELI_ELEMENT_VERSION(1,0,0),
@@ -81,10 +81,10 @@ public:
                 SST::Miranda::RequestGenerator
         )
 
-/* 	SST_ELI_DOCUMENT_PARAMS(
+ 	SST_ELI_DOCUMENT_PARAMS(
 		{ "matrix_nx",	"Sets the horizontal dimension of the matrix", "10" },
     		{ "matrix_ny",      "Sets the vertical dimension of the matrix (the number of rows)", "10" },
-    		{ "element_width",  "Sets the width of one matrix element, typically 8 for a double", "8" },
+    		{ "elementWidth",  "Sets the width of one matrix element, typically 8 for a double", "8" },
     		{ "lhs_start_addr", "Sets the start address of the LHS vector", "0" },
     		{ "rhs_start_addr", "Sets the start address of the RHS vector", "80" },
     		{ "local_row_start", "Sets the row at which this generator will start processing", "0" },
@@ -95,7 +95,7 @@ public:
     		{ "matrix_element_start_addr", "Sets the start address of the elements array", "0" },
     		{ "iterations",     "Sets the number of repeats to perform" },
     		{ "matrix_nnz_per_row", "Sets the number of non-zero elements per row", "9" }
-        ) */
+        ) 
 
 private:
 	Output* out;

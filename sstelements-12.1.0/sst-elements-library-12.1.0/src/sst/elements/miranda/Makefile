@@ -191,6 +191,7 @@ am__libmiranda_la_SOURCES_DIST = mirandaEvent.h mirandaGenerator.h \
 	generators/customcmd_opcode.h \
 	generators/streambench_customcmd.h \
 	generators/streambench_customcmd.cc generators/stake.cc \
+	generators/saxpygen.h \
 	generators/stake.h
 am__dirstamp = $(am__leading_dot)dirstamp
 #am__objects_1 = generators/stake.lo
@@ -231,6 +232,7 @@ am__depfiles_remade = ./$(DEPDIR)/mirandaCPU.Plo \
 	generators/$(DEPDIR)/stake.Plo \
 	generators/$(DEPDIR)/stencil3dbench.Plo \
 	generators/$(DEPDIR)/streambench.Plo \
+	generators/$(DEPDIR)/saxpygen.Plo \
 	generators/$(DEPDIR)/streambench_customcmd.Plo
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
@@ -532,6 +534,7 @@ libmiranda_la_SOURCES = mirandaEvent.h mirandaGenerator.h \
 	generators/stencil3dbench.cc generators/gupsgen.h \
 	generators/gupsgen.cc generators/nullgen.h \
 	generators/spmvgen.h generators/copygen.h \
+	generators/saxpygen.h \
 	generators/customcmd_opcode.h \
 	generators/streambench_customcmd.h \
 	generators/streambench_customcmd.cc $(am__append_1)
