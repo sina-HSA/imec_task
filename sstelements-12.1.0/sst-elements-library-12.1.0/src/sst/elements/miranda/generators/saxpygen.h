@@ -22,11 +22,11 @@ public:
 		const uint32_t verbose = params.find<uint32_t>("verbose", 0);
 		out = new Output("SAXPYGenerator[@p:@l]: ", verbose, 0, Output::STDOUT);
 
-		vecN = params.find<uint64_t>("vec_n", 10);
+		vecN = params.find<uint64_t>("vec_n", 10000);
 
 		elementWidth    = params.find<uint64_t>("element_width", 8);
 
-		uint64_t nextStartAddr = 0;
+		uint64_t nextStartAddr =  params.find<uint64_t>("nextStartAddr", 0);
 
                 // X vector has Nx elements of size elementWidth
 		xVecStartAddr = params.find<uint64_t>("x_start_addr", nextStartAddr);
@@ -47,11 +47,23 @@ public:
 	void generate(MirandaRequestQueue<GeneratorRequest*>* q) {
 		for(uint64_t i = 0; i < vecN; i++) {
 			// add read for x[i]
-			q->push_back(new MemoryOpRequest(xVecStartAddr + i*elementWidth, READ));
-			// add read for y[i]
-			q->push_back(new MemoryOpRequest(yVecStartAddr + i*elementWidth, READ));
-			// add the write to y[i] = scalarVal*x[i] + y[i]
-			q->push_back(new MemoryOpRequest(yVecStartAddr + i*elementWidth, WRITE));
+
+			MemoryOpRequest* read_a  = new MemoryOpRequest(xVecStartAddr + i*elementWidth, READ);
+            MemoryOpRequest* read_b = new MemoryOpRequest(yVecStartAddr + i*elementWidth, READ);
+            MemoryOpRequest* write_Res = new MemoryOpRequest(yVecStartAddr + i*elementWidth, WRITE);
+
+			write_Res->addDependency(read_a->getRequestID());
+			write_Res->addDependency(read_b->getRequestID());
+
+			out->verbose(CALL_INFO, 8, 0, "Issuing READ request for address %" PRIu64 "\n", (xVecStartAddr + i*elementWidth);
+			q->push_back(read_a);
+
+			out->verbose(CALL_INFO, 8, 0, "Issuing READ request for address %" PRIu64 "\n", (xVecStartAddr + i*elementWidth);
+			q->push_back(read_b);
+
+			out->verbose(CALL_INFO, 8, 0, "Issuing WRITE request for address %" PRIu64 "\n", (xVecStartAddr + i*elementWidth);
+			q->push_back(write_Res);
+
 		}
         iterations--;
 	}
@@ -65,7 +77,7 @@ public:
                 "miranda",
                 "SAXPYGenerator",
                 SST_ELI_ELEMENT_VERSION(1,0,0),
-		"Creates a diagonal matrix access pattern",
+		"Creates a linear matrix access pattern",
                 SST::Miranda::RequestGenerator
         )
 
