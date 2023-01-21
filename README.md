@@ -4,7 +4,7 @@ The SAXPY algorithm, short for "Single-precision A·X Plus Y", is a simple opera
 
 B = C*A + B
 
-where A is a scalar, and A and B are vectors of the same length. The SAXPY algorithm performs this operation on all elements of the vectors x and y.
+where A is a scalar, and A and B are vectors of the same length. The SAXPY algorithm performs this operation on all elements of the vectors A and B.
 
 # SST-Elements Implementation
 This repository contains an implementation of the SAXPY algorithm as part of SST-Elements. SST-Elements is a collection of simulation models that are used to simulate the behavior of computer systems and networks.
