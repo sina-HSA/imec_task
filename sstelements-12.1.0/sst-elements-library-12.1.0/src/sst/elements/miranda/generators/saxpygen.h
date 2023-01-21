@@ -82,8 +82,7 @@ public:
         )
 
  	SST_ELI_DOCUMENT_PARAMS(
-		{ "vecN",	"The number of elements ", "10" },
-    		{ "matrix_ny",      "Sets the vertical dimension of the matrix (the number of rows)", "10000" },
+		{ "vecN",	"The number of elements ", "10000" },
     		{ "elementWidth",  "Sets the width of one matrix element, typically 8 for a double", "8" },
     		{ "xVecStartAddr", "Sets the start address of the A vector", "0" },
     		{ "yVecStartAddr", "Sets the start address of the B vector", "10000" },
