@@ -48,20 +48,20 @@ public:
 		for(uint64_t i = 0; i < vecN; i++) {
 			// add read for x[i]
 
-			MemoryOpRequest* read_a  = new MemoryOpRequest(xVecStartAddr + i*elementWidth, READ);
-            MemoryOpRequest* read_b = new MemoryOpRequest(yVecStartAddr + i*elementWidth, READ);
-            MemoryOpRequest* write_Res = new MemoryOpRequest(yVecStartAddr + i*elementWidth, WRITE);
+			MemoryOpRequest* read_a  = new MemoryOpRequest(xVecStartAddr + i*elementWidth,elementWidth, READ);
+            MemoryOpRequest* read_b = new MemoryOpRequest(yVecStartAddr + i*elementWidth,elementWidth, READ);
+            MemoryOpRequest* write_Res = new MemoryOpRequest(yVecStartAddr + i*elementWidth,elementWidth, WRITE);
 
 			write_Res->addDependency(read_a->getRequestID());
 			write_Res->addDependency(read_b->getRequestID());
 
-			out->verbose(CALL_INFO, 8, 0, "Issuing READ request for address %" PRIu64 "\n", (xVecStartAddr + i*elementWidth);
+			out->verbose(CALL_INFO, 8, 0, "Issuing READ request for address %" PRIu64 "\n", (xVecStartAddr + i*elementWidth));
 			q->push_back(read_a);
 
-			out->verbose(CALL_INFO, 8, 0, "Issuing READ request for address %" PRIu64 "\n", (xVecStartAddr + i*elementWidth);
+			out->verbose(CALL_INFO, 8, 0, "Issuing READ request for address %" PRIu64 "\n", (yVecStartAddr + i*elementWidth));
 			q->push_back(read_b);
 
-			out->verbose(CALL_INFO, 8, 0, "Issuing WRITE request for address %" PRIu64 "\n", (xVecStartAddr + i*elementWidth);
+			out->verbose(CALL_INFO, 8, 0, "Issuing WRITE request for address %" PRIu64 "\n", (xVecStartAddr + i*elementWidth));
 			q->push_back(write_Res);
 
 		}
